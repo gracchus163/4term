@@ -17,10 +17,17 @@ int main()
 			printf("Error getting thread, try another id");
 			break;
 		}
-		json_t *post = json_array_get(data, 0);
-		json_t *op = json_object_get(post, "com");
+		for(size_t i=0; i < json_array_size(data);i++)
+		{
+		json_t *post = json_array_get(data, i);
+		json_t *subject = json_object_get(post,SUBJECT );
+		json_t *name = json_object_get(post, POSTER_NAME);
+		json_t *post_number = json_object_get(post, POST_NUMBER);
+		json_t *text = json_object_get(post, POST);
 		
-		printf("%s", json_string_value(op));
+			printf("%s %s - No.%d\n%s\n", json_string_value(subject), json_string_value(name), (int)json_number_value(post_number), json_string_value(text));
+		}
+		
 	}
 
 	return 0;
