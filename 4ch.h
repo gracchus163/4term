@@ -24,7 +24,7 @@
 #define SUBJECT "sub"
 #define POST "com"
 #define FILE_UNIX "tim"
-#define FILE "filename"
+#define FILENAME "filename"
 #define FILE_EXTENSION "ext"
 #define FILE_SIZE "fsize"
 #define FILE_MD5 "md5"
