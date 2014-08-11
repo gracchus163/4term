@@ -1,0 +1,65 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BOARD_LIST	4ch.h	9;"	d
+BUFFER_SIZE	hue.c	13;"	d	file:
+BUFFER_SIZE	json.c	9;"	d	file:
+CAPCODE	4ch.h	20;"	d
+CATALOG_URL	4ch.h	8;"	d
+CLOSED	4ch.h	14;"	d
+COUNTRY	4ch.h	21;"	d
+COUNTRY_NAME	4ch.h	22;"	d
+EMAIL	4ch.h	23;"	d
+FILENAME	4ch.h	27;"	d
+FILE_DELETED	4ch.h	33;"	d
+FILE_EXTENSION	4ch.h	28;"	d
+FILE_HEIGHT	4ch.h	32;"	d
+FILE_MD5	4ch.h	30;"	d
+FILE_SIZE	4ch.h	29;"	d
+FILE_SPOILER	4ch.h	34;"	d
+FILE_UNIX	4ch.h	26;"	d
+FILE_WIDTH	4ch.h	31;"	d
+IMAGES_OMITTED	4ch.h	36;"	d
+INDEX_URL	4ch.h	7;"	d
+JSN	json.h	2;"	d
+POST	4ch.h	25;"	d
+POSTER_ID	4ch.h	19;"	d
+POSTER_NAME	4ch.h	17;"	d
+POSTER_TRIP	4ch.h	18;"	d
+POSTS_OMITTED	4ch.h	35;"	d
+POST_NUMBER	4ch.h	11;"	d
+REPLY_TO	4ch.h	12;"	d
+STICKY	4ch.h	13;"	d
+SUBJECT	4ch.h	24;"	d
+THREAD_AT_BUMPLIMIT	4ch.h	39;"	d
+THREAD_AT_IMAGELIMIT	4ch.h	40;"	d
+THREAD_IMAGES	4ch.h	38;"	d
+THREAD_REPLIES	4ch.h	37;"	d
+THREAD_URL	4ch.h	6;"	d
+TIME	4ch.h	15;"	d
+TIME_UNIX	4ch.h	16;"	d
+URL_FORMAT	hue.c	15;"	d	file:
+URL_SIZE	4ch.h	5;"	d
+URL_SIZE	hue.c	16;"	d	file:
+ch4	4ch.h	2;"	d
+data	hue.c	/^    char *data;$/;"	m	struct:write_result	file:
+data	json.c	/^    char *data;$/;"	m	struct:write_result	file:
+get_page	4ch.c	/^int get_page(json_t** threads, char* board, int index)$/;"	f
+get_post_attr	4ch.c	/^int get_post_attr(json_t* post, json_t** obj, char* attr)$/;"	f
+get_thread	4ch.c	/^int get_thread(json_t** thread, char *board, int id)$/;"	f
+huh	4curses.c	/^int huh()$/;"	f
+main	4curses.c	/^int main()$/;"	f
+main	hue.c	/^int main()$/;"	f
+newline_offset	hue.c	/^static int newline_offset(const char *text)$/;"	f	file:
+newline_offset	json.c	/^int newline_offset(const char *text)$/;"	f
+pos	hue.c	/^    int pos;$/;"	m	struct:write_result	file:
+pos	json.c	/^    int pos;$/;"	m	struct:write_result	file:
+request	hue.c	/^static char *request(const char *url)$/;"	f	file:
+request	json.c	/^char *request(const char *url)$/;"	f
+write_response	hue.c	/^static size_t write_response(void *ptr, size_t size, size_t nmemb, void *stream)$/;"	f	file:
+write_response	json.c	/^size_t write_response(void *ptr, size_t size, size_t nmemb, void *stream)$/;"	f
+write_result	hue.c	/^struct write_result$/;"	s	file:
+write_result	json.c	/^struct write_result$/;"	s	file:
