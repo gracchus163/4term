@@ -39,7 +39,8 @@ int main()
 	{
 		if (0 == sscanf(line, "%d", &thread_id)) return 1;
 	}
-	char* post = huh(thread_id);
+	struct post_chars ch; 
+	if(get_thread_chars("g", thread_id, &ch, 0)) return 1;
 	initscr();
 	cbreak();
 	noecho();
@@ -50,8 +51,9 @@ int main()
 			refresh();
 
 		}*/
-		addstr(post);
-		refresh();
+	//	addstr(post);
+	printw("%s %s - %s\n%s", ch.subject, ch.name, ch.time, ch.post);
+	refresh();
 	while(1)
 	{
 		if(getch()) break;

@@ -24,7 +24,23 @@ int get_thread(json_t** thread, char *board, int id)
 	
 	return 0;
 }
+int get_thread_chars(char* board, int id, struct post_chars* ch, int n)
+{
+	json_t* data = NULL;
+	if(get_thread(&data, board, id)) return 1;
 
+	json_t *post = json_array_get(data, n);
+	json_t *subject = json_object_get(post,SUBJECT );
+	json_t *name = json_object_get(post, POSTER_NAME);
+	json_t *post_number = json_object_get(post, POST_NUMBER);
+	json_t *text = json_object_get(post, POST);
+
+	ch->no = json_string_value(post_number);
+	ch->subject = json_string_value(subject);
+	ch->name = json_string_value(name);
+	ch->post = json_string_value(text);
+	return 0;
+}
 int get_page(json_t** threads, char* board, int index)
 {
 	char url[URL_SIZE];
