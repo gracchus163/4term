@@ -47,18 +47,29 @@ URL_SIZE	hue.c	16;"	d	file:
 ch4	4ch.h	2;"	d
 data	hue.c	/^    char *data;$/;"	m	struct:write_result	file:
 data	json.c	/^    char *data;$/;"	m	struct:write_result	file:
+filename	4ch.h	/^	char* filename;$/;"	m	struct:post_chars
 get_page	4ch.c	/^int get_page(json_t** threads, char* board, int index)$/;"	f
+get_page_chars	4ch.c	/^int get_page_chars(json_t* page, struct post_chars* ch)$/;"	f
 get_post_attr	4ch.c	/^int get_post_attr(json_t* post, json_t** obj, char* attr)$/;"	f
+get_post_chars	4ch.c	/^int get_post_chars(json_t* post, struct post_chars* ch)$/;"	f
 get_thread	4ch.c	/^int get_thread(json_t** thread, char *board, int id)$/;"	f
-huh	4curses.c	/^int huh()$/;"	f
+huh	4curses.c	/^char* huh(int thread_id)$/;"	f
 main	4curses.c	/^int main()$/;"	f
 main	hue.c	/^int main()$/;"	f
+name	4ch.h	/^	char* name;$/;"	m	struct:post_chars
 newline_offset	hue.c	/^static int newline_offset(const char *text)$/;"	f	file:
 newline_offset	json.c	/^int newline_offset(const char *text)$/;"	f
+no	4ch.h	/^	char* no;$/;"	m	struct:post_chars
 pos	hue.c	/^    int pos;$/;"	m	struct:write_result	file:
 pos	json.c	/^    int pos;$/;"	m	struct:write_result	file:
+post	4ch.h	/^	char* post;$/;"	m	struct:post_chars
+post_chars	4ch.h	/^struct post_chars$/;"	s
+print_page	4curses.c	/^int print_page(int index, char* board)$/;"	f
 request	hue.c	/^static char *request(const char *url)$/;"	f	file:
 request	json.c	/^char *request(const char *url)$/;"	f
+subject	4ch.h	/^	char* subject;$/;"	m	struct:post_chars
+time	4ch.h	/^	char* time;$/;"	m	struct:post_chars
+trip	4ch.h	/^	char* trip;$/;"	m	struct:post_chars
 write_response	hue.c	/^static size_t write_response(void *ptr, size_t size, size_t nmemb, void *stream)$/;"	f	file:
 write_response	json.c	/^size_t write_response(void *ptr, size_t size, size_t nmemb, void *stream)$/;"	f
 write_result	hue.c	/^struct write_result$/;"	s	file:

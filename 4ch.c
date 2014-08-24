@@ -1,7 +1,7 @@
 #include "4ch.h"
 #include "json.h"
 
-int get_thread(json_t** thread, char *board, int id)
+int get_thread_json(json_t** thread, char *board, int id)
 {
 	char url[URL_SIZE];
 	char* text;
@@ -24,12 +24,8 @@ int get_thread(json_t** thread, char *board, int id)
 	
 	return 0;
 }
-int get_thread_chars(char* board, int id, struct post_chars* ch, int n)
+int get_post_data(json_t* post, struct post_data* ch)
 {
-	json_t* data = NULL;
-	if(get_thread(&data, board, id)) return 1;
-
-	json_t *post = json_array_get(data, n);
 	json_t *subject = json_object_get(post,SUBJECT );
 	json_t *name = json_object_get(post, POSTER_NAME);
 	json_t *post_number = json_object_get(post, POST_NUMBER);
@@ -67,19 +63,15 @@ int get_page(json_t** threads, char* board, int index)
 	json_decref(root);
 	return 0;
 }
+int get_page_data(json_t* page, struct post_data* ch)
+{//15 threads per page and 6 posts per thread?  skip to end of thread if null
+	json_t* thread = json_object_get(json_array_get(page, 0), "posts");
+	json_t* post = json_array_get(thread, 0);
+	return 0;
+}
 int get_post_attr(json_t* post, json_t** obj, char* attr)
 {
 	*obj = json_object_get(post, attr);	
 	if(json_is_object(*obj)) return 0;
 	return 1;
 }
-/*
- json_t *thread_id, *thread_topic, *thread_comment;
-json_t *post = json_array_get(thread, 0);
-
-thread_id = json_object_get(post, "no");
-thread_topic = json_object_get(post, "sub");
-thread_comment = json_object_get(post, "com");
-
-printf("%d - %s\n%s\n",(int) json_integer_value(thread_id),json_string_value(thread_topic), json_string_value(thread_comment));
-*/
