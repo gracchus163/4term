@@ -55,7 +55,7 @@ struct thread_data
 {
 	char* no;
 	char* subject;
-	struct post_data posts[];
+	struct post_data *posts; //array of posts
 
 };
 

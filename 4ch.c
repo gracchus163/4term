@@ -24,6 +24,16 @@ int get_thread_json(json_t** thread, char *board, int id)
 	
 	return 0;
 }
+int get_thread_data(json_t* thread, struct thread_data* data)
+{
+	int len = json_integer_value(json_object_get(json_array_get(thread, 0), THREAD_REPLIES));
+	(*data).posts = malloc(sizeof(struct post_data)*len);
+	for (int i = 0; i < len; i++)
+	{
+		get_post_data(json_array_get(thread, i),(&data->posts[i]));
+	}
+	return 0;
+}
 int get_post_data(json_t* post, struct post_data* ch)
 {
 	json_t *subject = json_object_get(post,SUBJECT );
@@ -37,7 +47,7 @@ int get_post_data(json_t* post, struct post_data* ch)
 	ch->post = json_string_value(text);
 	return 0;
 }
-int get_page(json_t** threads, char* board, int index)
+int get_page_json(json_t** threads, char* board, int index)
 {
 	char url[URL_SIZE];
 	char* text;
@@ -63,10 +73,10 @@ int get_page(json_t** threads, char* board, int index)
 	json_decref(root);
 	return 0;
 }
-int get_page_data(json_t* page, struct post_data* ch)
+int get_page_data(json_t* page, struct thread_data threads[])
 {//15 threads per page and 6 posts per thread?  skip to end of thread if null
-	json_t* thread = json_object_get(json_array_get(page, 0), "posts");
-	json_t* post = json_array_get(thread, 0);
+	threads->subject = "eeeeee";
+	json_object_get(page, "ee");
 	return 0;
 }
 int get_post_attr(json_t* post, json_t** obj, char* attr)
