@@ -42,8 +42,8 @@
 
 struct post_data
 {
-	char* no;
-	char* time;
+	int no;
+	int time;
 	char* name;
 	char* trip;
 	char* subject;
@@ -55,6 +55,7 @@ struct thread_data
 {
 	char* no;
 	char* subject;
+	int replies;
 	struct post_data *posts; //array of posts
 
 };

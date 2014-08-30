@@ -27,6 +27,7 @@ int get_thread_json(json_t** thread, char *board, int id)
 int get_thread_data(json_t* thread, struct thread_data* data)
 {
 	int len = json_integer_value(json_object_get(json_array_get(thread, 0), THREAD_REPLIES));
+	data->replies = len;
 	(*data).posts = malloc(sizeof(struct post_data)*len);
 	for (int i = 0; i < len; i++)
 	{
@@ -40,8 +41,10 @@ int get_post_data(json_t* post, struct post_data* ch)
 	json_t *name = json_object_get(post, POSTER_NAME);
 	json_t *post_number = json_object_get(post, POST_NUMBER);
 	json_t *text = json_object_get(post, POST);
+	json_t *time = json_object_get(post, TIME);
 
-	ch->no = json_string_value(post_number);
+	ch->no = json_integer_value(post_number);
+	ch->time = json_integer_value(time);
 	ch->subject = json_string_value(subject);
 	ch->name = json_string_value(name);
 	ch->post = json_string_value(text);
