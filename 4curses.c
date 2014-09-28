@@ -34,21 +34,38 @@ int remove_html(char** str)
 	free(temp);
 	return 0;
 }
-int test(struct post_data* post)
+int test(struct post_data* post, char* ret)
 {
 	if(post->post == NULL) return 1;
 	char *str= malloc(sizeof(post->post)*strlen(post->post)) , *read = post->post;
 	char *write = str;
 	do 
 	{
+		if(strncmp(read, "&gt;", 4)==0)
+		{
+			*(write++) = '>';
+			read += 3;
+			continue;
+		}
+		if(strncmp(read, "&#039;", 6)==0)
+		{
+			*(write++) = '\'';
+			read += 5;
+			continue;
+		}
 		if(*read == '<')
 		{
+			if(read[1] == 'b' && read[2] == 'r') 
+				*(write++) = '\n';
+
 			while(*read != '>') read++;
 		}
 		else *(write++) = *read;
 	} while (*(read++));	
-	printf("%s\n\n", post->post);
-	printf("%s\n\n", str);
+	//printf("%s\n\n", post->post);
+	//printf("%s\n\n", str);
+	strcpy(ret, str);
+	free(str);
 	return 0;
 }
 int print_post(struct post_data* post, WINDOW* win)
@@ -84,15 +101,20 @@ int main()
 		printf("Error getting thread, try another id");
 		return 1;
 	}
-
+	char* com = NULL;
 	get_thread_data(data, &thrd);
 	for(int i = 0; i < thrd.replies; i++)
 	{
 	//	print_post(thrd.posts+i, stdscr);
-		test(thrd.posts+i);
+		struct post_data pst = thrd.posts[i];
+		com = (char*) malloc(sizeof(char*)*strlen(pst.post));
+		test(thrd.posts+i, com);
+		printf(com);
+		printf("\n");
+		free(com);
 	}
 	//finish
-	refresh();
+//	refresh();
 	while(!getch()) {}
 	//endwin();
 	return 0;
