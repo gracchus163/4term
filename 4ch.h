@@ -53,7 +53,7 @@ struct post_data
 };
 struct thread_data
 {
-	char* no;
+	int no;
 	char* subject;
 	int replies;
 	struct post_data *posts; //array of posts

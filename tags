@@ -12,6 +12,7 @@ CATALOG_URL	4ch.h	8;"	d
 CLOSED	4ch.h	14;"	d
 COUNTRY	4ch.h	21;"	d
 COUNTRY_NAME	4ch.h	22;"	d
+DirectoryOfThisScript	.ycm_extra_conf.py	/^def DirectoryOfThisScript():$/;"	f
 EMAIL	4ch.h	23;"	d
 FILENAME	4ch.h	27;"	d
 FILE_DELETED	4ch.h	33;"	d
@@ -22,9 +23,13 @@ FILE_SIZE	4ch.h	29;"	d
 FILE_SPOILER	4ch.h	34;"	d
 FILE_UNIX	4ch.h	26;"	d
 FILE_WIDTH	4ch.h	31;"	d
+FlagsForFile	.ycm_extra_conf.py	/^def FlagsForFile( filename, **kwargs ):$/;"	f
+GetCompilationInfoForFile	.ycm_extra_conf.py	/^def GetCompilationInfoForFile( filename ):$/;"	f
 IMAGES_OMITTED	4ch.h	36;"	d
 INDEX_URL	4ch.h	7;"	d
+IsHeaderFile	.ycm_extra_conf.py	/^def IsHeaderFile( filename ):$/;"	f
 JSN	json.h	2;"	d
+MakeRelativePathsInFlagsAbsolute	.ycm_extra_conf.py	/^def MakeRelativePathsInFlagsAbsolute( flags, working_directory ):$/;"	f
 POST	4ch.h	25;"	d
 POSTER_ID	4ch.h	19;"	d
 POSTER_NAME	4ch.h	17;"	d
@@ -32,6 +37,7 @@ POSTER_TRIP	4ch.h	18;"	d
 POSTS_OMITTED	4ch.h	35;"	d
 POST_NUMBER	4ch.h	11;"	d
 REPLY_TO	4ch.h	12;"	d
+SOURCE_EXTENSIONS	.ycm_extra_conf.py	/^SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]$/;"	v
 STICKY	4ch.h	13;"	d
 SUBJECT	4ch.h	24;"	d
 THREAD_AT_BUMPLIMIT	4ch.h	39;"	d
@@ -45,32 +51,57 @@ URL_FORMAT	hue.c	15;"	d	file:
 URL_SIZE	4ch.h	5;"	d
 URL_SIZE	hue.c	16;"	d	file:
 ch4	4ch.h	2;"	d
+compilation_database_folder	.ycm_extra_conf.py	/^compilation_database_folder = ''$/;"	v
 data	hue.c	/^    char *data;$/;"	m	struct:write_result	file:
 data	json.c	/^    char *data;$/;"	m	struct:write_result	file:
-filename	4ch.h	/^	char* filename;$/;"	m	struct:post_chars
-get_page	4ch.c	/^int get_page(json_t** threads, char* board, int index)$/;"	f
-get_page_chars	4ch.c	/^int get_page_chars(json_t* page, struct post_chars* ch)$/;"	f
+database	.ycm_extra_conf.py	/^  database = None$/;"	v
+database	.ycm_extra_conf.py	/^  database = ycm_core.CompilationDatabase( compilation_database_folder )$/;"	v
+filename	4ch.h	/^	char* filename;$/;"	m	struct:post_data
+flags	.ycm_extra_conf.py	/^flags = [$/;"	v
+get_page_data	4ch.c	/^int get_page_data(json_t* page, struct thread_data threads[])$/;"	f
+get_page_json	4ch.c	/^int get_page_json(json_t** threads, char* board, int index)$/;"	f
 get_post_attr	4ch.c	/^int get_post_attr(json_t* post, json_t** obj, char* attr)$/;"	f
-get_post_chars	4ch.c	/^int get_post_chars(json_t* post, struct post_chars* ch)$/;"	f
-get_thread	4ch.c	/^int get_thread(json_t** thread, char *board, int id)$/;"	f
-huh	4curses.c	/^char* huh(int thread_id)$/;"	f
-main	4curses.c	/^int main()$/;"	f
+get_post_data	4ch.c	/^int get_post_data(json_t* post, struct post_data* ch)$/;"	f
+get_thread_data	4ch.c	/^int get_thread_data(json_t* thread, struct thread_data* data)$/;"	f
+get_thread_json	4ch.c	/^int get_thread_json(json_t** thread, char *board, int id)$/;"	f
+height	termutil.h	/^	int height;$/;"	m	struct:window
+main	4term.c	/^int main()$/;"	f
 main	hue.c	/^int main()$/;"	f
-name	4ch.h	/^	char* name;$/;"	m	struct:post_chars
+main	trm.c	/^int main()$/;"	f
+name	4ch.h	/^	char* name;$/;"	m	struct:post_data
 newline_offset	hue.c	/^static int newline_offset(const char *text)$/;"	f	file:
 newline_offset	json.c	/^int newline_offset(const char *text)$/;"	f
-no	4ch.h	/^	char* no;$/;"	m	struct:post_chars
+no	4ch.h	/^	char* no;$/;"	m	struct:thread_data
+no	4ch.h	/^	int no;$/;"	m	struct:post_data
+no_rows	termutil.h	/^	int no_rows;$/;"	m	struct:window
+os	.ycm_extra_conf.py	/^import os$/;"	i
 pos	hue.c	/^    int pos;$/;"	m	struct:write_result	file:
 pos	json.c	/^    int pos;$/;"	m	struct:write_result	file:
-post	4ch.h	/^	char* post;$/;"	m	struct:post_chars
-post_chars	4ch.h	/^struct post_chars$/;"	s
-print_page	4curses.c	/^int print_page(int index, char* board)$/;"	f
+post	4ch.h	/^	char* post;$/;"	m	struct:post_data
+post_data	4ch.h	/^struct post_data$/;"	s
+posts	4ch.h	/^	struct post_data *posts; \/\/array of posts$/;"	m	struct:thread_data	typeref:struct:thread_data::post_data
+print_	trm.c	/^void print_()$/;"	f
+print_post	4term.c	/^void print_post(char* str)$/;"	f
+print_row	4term.c	/^void print_row(char* str)$/;"	f
+redraw	termutil.h	/^void redraw(struct window* w_) $/;"	f
+replies	4ch.h	/^	int replies;$/;"	m	struct:thread_data
 request	hue.c	/^static char *request(const char *url)$/;"	f	file:
 request	json.c	/^char *request(const char *url)$/;"	f
-subject	4ch.h	/^	char* subject;$/;"	m	struct:post_chars
-time	4ch.h	/^	char* time;$/;"	m	struct:post_chars
-trip	4ch.h	/^	char* trip;$/;"	m	struct:post_chars
+rows	termutil.h	/^	char** rows;$/;"	m	struct:window
+scrollpos	termutil.h	/^	int scrollpos;$/;"	m	struct:window
+selected	termutil.h	/^	int selected; \/\/selected row$/;"	m	struct:window
+strip_html	4term.c	/^int strip_html(struct post_data* post, char* ret)$/;"	f
+subject	4ch.h	/^	char* subject;$/;"	m	struct:post_data
+subject	4ch.h	/^	char* subject;$/;"	m	struct:thread_data
+thread_data	4ch.h	/^struct thread_data$/;"	s
+time	4ch.h	/^	int time;$/;"	m	struct:post_data
+trip	4ch.h	/^	char* trip;$/;"	m	struct:post_data
+width	termutil.h	/^	int width;$/;"	m	struct:window
+window	termutil.h	/^struct window$/;"	s
 write_response	hue.c	/^static size_t write_response(void *ptr, size_t size, size_t nmemb, void *stream)$/;"	f	file:
 write_response	json.c	/^size_t write_response(void *ptr, size_t size, size_t nmemb, void *stream)$/;"	f
 write_result	hue.c	/^struct write_result$/;"	s	file:
 write_result	json.c	/^struct write_result$/;"	s	file:
+xpos	termutil.h	/^	int xpos, ypos;$/;"	m	struct:window
+ycm_core	.ycm_extra_conf.py	/^import ycm_core$/;"	i
+ypos	termutil.h	/^	int xpos, ypos;$/;"	m	struct:window

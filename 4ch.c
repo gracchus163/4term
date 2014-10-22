@@ -28,6 +28,8 @@ int get_thread_data(json_t* thread, struct thread_data* data)
 {
 	int len = json_integer_value(json_object_get(json_array_get(thread, 0), THREAD_REPLIES));
 	data->replies = len;
+	data->subject = json_string_value(json_object_get(json_array_get(thread, 0), SUBJECT));
+	data->no = json_integer_value(json_object_get(json_array_get(thread, 0), POST_NUMBER));
 	(*data).posts = malloc(sizeof(struct post_data)*len);
 	for (int i = 0; i < len; i++)
 	{
