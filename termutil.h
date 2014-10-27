@@ -22,3 +22,7 @@ void redraw(struct window* w_)
 		//ypos++
 	}
 }
+void print_window(struct window w);
+
+//change window scroll value and then just call redraw?
+void scroll_window(struct window w, int scroll);

@@ -2,17 +2,51 @@
 #include <string.h>
 #include <stdio.h>
 #include <termbox.h>
+#include <termutil.h>
 
-
-
-void print_row(char* str)
+void print_window(struct window w)
 {
-	for(int i = 0; i < tb_width(); i++)
+
+}
+void write_window(struct window w_, struct thread_data thrd)
+{
+	int w = w_.width; int h = w_.height;
+	char* title = (char*)malloc(sizeof(char)*w+1);
+	snprintf(title, w,"No.%d - %s", thrd.no, thrd.subject); 
+for(int x = 0; x < w; x++) 
+{
+	if(*title == '\0')
+		tb_change_cell(x, 0, '=', TB_DEFAULT, TB_BLACK);
+	else
+		tb_change_cell(x,0, *(title++), TB_DEFAULT, TB_BLACK);
+}
+
+	int n = 0; int thrd_len = thrd.replies;
+	struct post_data p = thrd.posts[n];
+	char* com = p.post;
+	for(int y =1; y < h; y++)
 	{
-		tb_change_cell(i,0, *str++, TB_BLACK, TB_DEFAULT);
+		for(int x = 0; x < w; x++)
+		{
+			if(*com == '\0')
+			{
+				//free(com);
+				if(n++ >= thrd_len) return;
+				p = thrd.posts[n];
+				com = p.post;
+				break;
+			}
+			if(*com == '\n')
+			{
+				++com;
+				break;
+			}
+			tb_change_cell(x,y, *(com++), TB_DEFAULT, TB_BLACK);
+		}
 	}
-}	
-//takes potentially multiline string and prints it in appropriate rows
+	//free(com);
+	return;
+}
 void print_post(char* str)
 {
 	for(int y = 0; y < tb_height(); y++)
@@ -73,10 +107,6 @@ int main()
 		if (0 == sscanf(line, "%d", &thread_id)) return 1;
 	}
 	struct thread_data thrd;
-	/*initscr();
-	cbreak();
-	noecho();
-	scrollok(stdscr, true);*/
 	json_t* data = NULL;
 
 	if(get_thread_json(&data, "g", thread_id))
@@ -86,6 +116,7 @@ int main()
 	}
 	//char* com = NULL;
 	get_thread_data(data, &thrd);
+	json_decref(data);
 	tb_init();
 	tb_set_clear_attributes(TB_DEFAULT, TB_BLACK);
 	tb_clear();
