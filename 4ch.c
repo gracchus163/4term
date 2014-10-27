@@ -47,9 +47,18 @@ int get_post_data(json_t* post, struct post_data* ch)
 
 	ch->no = json_integer_value(post_number);
 	ch->time = json_integer_value(time);
-	ch->subject = json_string_value(subject);
-	ch->name = json_string_value(name);
-	ch->post = json_string_value(text);
+	ch->subject = malloc(1+json_string_length(subject)*sizeof(char));
+	strncpy(ch->subject, json_string_value(subject), json_string_length(subject));
+	
+	ch->name = malloc(1+json_string_length(name)*sizeof(char));
+	strncpy(ch->name, json_string_value(name), json_string_length(name));
+	
+	char* tmp ;
+	strip_html(json_string_value(text), &tmp);
+
+	ch->post = malloc(1+strlen(tmp)*sizeof(char));
+	strncpy(ch->post, tmp, strlen(tmp));
+	free(tmp);
 	return 0;
 }
 int get_page_json(json_t** threads, char* board, int index)
@@ -89,4 +98,37 @@ int get_post_attr(json_t* post, json_t** obj, char* attr)
 	*obj = json_object_get(post, attr);	
 	if(json_is_object(*obj)) return 0;
 	return 1;
+}
+int strip_html(char* post, char** ret)
+{
+	char *str= malloc(strlen(post)) , *read = post;
+	char *write = str;
+	do 
+	{
+		if(strncmp(read, "&gt;", 4)==0)
+		{
+			*(write++) = '>';
+			read += 3;
+			continue;
+		}
+		if(strncmp(read, "&#039;", 6)==0)
+		{
+			*(write++) = '\'';
+			read += 5;
+			continue;
+		}
+		if(*read == '<')
+		{
+			if(read[1] == 'b' && read[2] == 'r') 
+				*(write++) = '\n';
+
+			while(*read != '>') read++;
+		}
+		else *(write++) = *read;
+	} while (*(read++));	
+	*write = '\0';
+	*ret = malloc(strlen(str)+1);
+	strcpy(*ret, str);
+	free(str);
+	return 0;
 }
