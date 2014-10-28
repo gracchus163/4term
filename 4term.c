@@ -2,38 +2,42 @@
 #include <string.h>
 #include <stdio.h>
 #include <termbox.h>
-#include <termutil.h>
+#include "termutil.h"
 
 void print_window(struct window w)
 {
 
 }
-void write_window(struct window w_, struct thread_data thrd)
+void write_window(struct window win, struct thread_data thrd)
 {
-	int w = w_.width; int h = w_.height;
+	int w = win.width; int h = win.height;
 	char* title = (char*)malloc(sizeof(char)*w+1);
 	snprintf(title, w,"No.%d - %s", thrd.no, thrd.subject); 
+	char** r = win.rows;
+	*r = malloc(sizeof(char)*w);
 for(int x = 0; x < w; x++) 
 {
 	if(*title == '\0')
-		tb_change_cell(x, 0, '=', TB_DEFAULT, TB_BLACK);
+		*((*r)+x) = '=';
 	else
-		tb_change_cell(x,0, *(title++), TB_DEFAULT, TB_BLACK);
+		*((*r)+x) = *(title++);
 }
 
 	int n = 0; int thrd_len = thrd.replies;
 	struct post_data p = thrd.posts[n];
-	char* com = p.post;
+	char* str = p.post;
+	char* com = str;
 	for(int y =1; y < h; y++)
 	{
 		for(int x = 0; x < w; x++)
 		{
 			if(*com == '\0')
 			{
-				//free(com);
 				if(n++ >= thrd_len) return;
 				p = thrd.posts[n];
-				com = p.post;
+				free(str);
+				str = p.post;
+				com = str;
 				break;
 			}
 			if(*com == '\n')
@@ -41,10 +45,11 @@ for(int x = 0; x < w; x++)
 				++com;
 				break;
 			}
-			tb_change_cell(x,y, *(com++), TB_DEFAULT, TB_BLACK);
+//tb_change_cell(x,y, *(com++), TB_DEFAULT, TB_BLACK);
+			*((*(r+y))+x) = *(com++);
 		}
 	}
-	//free(com);
+	free(str);
 	return;
 }
 void print_post(char* str)
