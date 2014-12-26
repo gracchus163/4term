@@ -28,7 +28,18 @@ int get_thread_data(json_t* thread, struct thread_data* data)
 {
 	int len = json_integer_value(json_object_get(json_array_get(thread, 0), THREAD_REPLIES));
 	data->replies = len;
-	data->subject = json_string_value(json_object_get(json_array_get(thread, 0), SUBJECT));
+	int sub = json_string_length(json_object_get(json_array_get(thread,0), SUBJECT));
+	if(sub)
+	{
+		data->subject = malloc(sizeof(char)*sub+1);
+		strncpy(data->subject, json_string_value(json_object_get(json_array_get(thread, 0), SUBJECT)), sub);
+		data->subject[sub] = 0;//emergency null termination
+	}
+	else
+	{
+		data->subject = malloc(sizeof(char));
+		data->subject[0] = '\0';
+	}
 	data->no = json_integer_value(json_object_get(json_array_get(thread, 0), POST_NUMBER));
 	(*data).posts = malloc(sizeof(struct post_data)*len);
 	for (int i = 0; i < len; i++)
@@ -42,7 +53,6 @@ int get_post_data(json_t* post, struct post_data* ch)
 	json_t *subject = json_object_get(post,SUBJECT );
 	json_t *name = json_object_get(post, POSTER_NAME);
 	json_t *post_number = json_object_get(post, POST_NUMBER);
-	json_t *text = json_object_get(post, POST);
 	json_t *time = json_object_get(post, TIME);
 
 	ch->no = json_integer_value(post_number);
@@ -53,12 +63,20 @@ int get_post_data(json_t* post, struct post_data* ch)
 	ch->name = malloc(1+json_string_length(name)*sizeof(char));
 	strncpy(ch->name, json_string_value(name), json_string_length(name));
 	
-	char* tmp ;
-	strip_html(json_string_value(text), &tmp);
-
-	ch->post = malloc(1+strlen(tmp)*sizeof(char));
-	strncpy(ch->post, tmp, strlen(tmp));
-	free(tmp);
+	json_t *text = json_object_get(post, POST);
+	if(json_string_length(text))
+	{
+		char* tmp;
+		strip_html(json_string_value(text), &tmp);
+		ch->post = malloc(1+strlen(tmp)*sizeof(char));
+		strncpy(ch->post, tmp, strlen(tmp)+1);
+		free(tmp);
+	}
+	else
+	{//TODO: Can't free when cleanup
+		ch->post = malloc(8*sizeof(char));
+		strncpy(ch->post, "[BLANK]", 8);
+	}
 	return 0;
 }
 int get_page_json(json_t** threads, char* board, int index)
@@ -101,7 +119,8 @@ int get_post_attr(json_t* post, json_t** obj, char* attr)
 }
 int strip_html(char* post, char** ret)
 {
-	char *str= malloc(strlen(post)) , *read = post;
+	//TODO: Figure out segfaults here when using strlen with malloc
+	char *str= malloc(2+strlen(post)*sizeof(char)) , *read = post;
 	char *write = str;
 	do 
 	{
@@ -129,6 +148,7 @@ int strip_html(char* post, char** ret)
 	*write = '\0';
 	*ret = malloc(strlen(str)+1);
 	strcpy(*ret, str);
+	
 	free(str);
 	return 0;
 }

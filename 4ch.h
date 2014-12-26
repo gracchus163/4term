@@ -70,6 +70,6 @@ int get_page_data(json_t* page, struct thread_data threads[]);
 int get_catalog_json(json_t** threads, char* board);
 int get_post_attr(json_t* post, json_t** obj, char* attr);
 
-int strip_html(char* post, char** ret);
+int strip_html(char* pst, char** ret);
 #endif
 
