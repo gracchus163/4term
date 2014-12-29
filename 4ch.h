@@ -68,6 +68,7 @@ int get_post_data(json_t* post, struct post_data* ch);
 int get_page_json(json_t** page, char* board, int index);
 int get_page_data(json_t* page, struct thread_data threads[]);
 int get_catalog_json(json_t** threads, char* board);
+int get_catalog_data(json_t* thrds, struct thread_data* data);
 int get_post_attr(json_t* post, json_t** obj, char* attr);
 int get_boards(json_t** boards);
 

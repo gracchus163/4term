@@ -70,13 +70,25 @@ void print_boards(json_t* b, struct window* win)
 	int n = json_array_size(b);
 	//7 chars = /lgbt/\0 enough to store every brd
 	char** r = win->rows;
+	int w = win->width;
+	int j=0; int k=0; int it = 0;
+	*r = malloc(sizeof(char)*w); **r = 0;
 	for(int i = 0; i < n; i++)
 	{
-		*(r+i) = malloc(7*sizeof(char));
-		snprintf(win->rows[i], 7, "/%s/", json_string_value(json_object_get(json_array_get(b, i), "board")));
+		k = json_string_length(json_object_get(json_array_get(b, i), "board"));
+		k+=1;
+		if(j+k >= w)
+		{
+			it++;
+			*(r+it) = malloc(sizeof(char)*w);	
+			**(r+it) = 0;
+			j =0;
+		}
+		strcat(*(r+it), "/");
+		strcat(*(r+it), json_string_value(json_object_get(json_array_get(b, i), "board")));
+		j += k;
 	}
-	win->no_rows = tb_height(); win->selected = 0; win->xpos = 0; win->ypos = 0; win->height = tb_height(); win->width = tb_width();
-	win->scrollpos = 0;
+	win->no_rows = it;
 }
 int main()
 {
@@ -96,17 +108,21 @@ int main()
 		return 1;
 	}
 	*/
-	json_t* brds = NULL;
-	struct window* boards = malloc(sizeof(struct window));
-	if(get_boards(&brds)) printf("get boards: 1");
-	boards->rows = malloc(sizeof(char*)*json_array_size(brds));
-	print_boards(brds, boards);
 	
 
 	tb_init();
 	tb_set_clear_attributes(TB_BLUE, TB_GREEN);
 	tb_clear();
 
+	json_t* brds = NULL;
+	struct window* boards = malloc(sizeof(struct window));
+	if(get_boards(&brds)) printf("get boards: 1");
+
+	boards->rows = malloc(sizeof(char*)*json_array_size(brds));
+	boards->no_rows = 1; boards->selected = 0; boards->xpos = 0; boards->ypos = 0; boards->height = tb_height(); boards->width = tb_width();
+	boards->scrollpos = 0;
+	
+	print_boards(brds, boards);
 	print_window(boards);
 	tb_present();
 

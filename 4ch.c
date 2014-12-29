@@ -80,6 +80,34 @@ int get_post_data(json_t* post, struct post_data* ch)
 	}
 	return 0;
 }
+int get_catalog_data(json_t* cat, struct thread_data* data)
+{
+
+	return 0;
+}	
+int get_catalog_json(json_t** data, char* board)
+{
+	char url[URL_SIZE];
+	char* text;
+
+	json_t *root;
+	json_error_t error;
+	snprintf(url, URL_SIZE, CATALOG_URL, board);
+
+	text = request(url);
+	if(!text) return 1;
+	root = json_loads(text, 0, &error);
+	free(text);
+	if(!root)
+	{
+		fprintf(stderr, "error: on line %d: %s\n", error.line, error.text);
+		return 1;
+	}
+	if(!json_is_object(root)) printf("root not obj");
+	*data = json_object_get(root, "posts");
+
+	return 0;
+}	
 int get_page_json(json_t** threads, char* board, int index)
 {
 	char url[URL_SIZE];
@@ -155,7 +183,7 @@ int strip_html(char* post, char** ret)
 }
 int get_boards(json_t** boards)
 {
-	char *url = "https://a.4cdn.org/boards.json";	
+	char *url = BOARD_LIST;	
 	json_error_t error;
 	char *text = request(url);
 	if(!text) return 1;
