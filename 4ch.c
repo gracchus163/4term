@@ -1,5 +1,6 @@
 #include "4ch.h"
 #include "json.h"
+#include <string.h>
 
 int get_thread_json(json_t** thread, char *board, int id)
 {
@@ -150,5 +151,16 @@ int strip_html(char* post, char** ret)
 	strcpy(*ret, str);
 	
 	free(str);
+	return 0;
+}
+int get_boards(json_t** boards)
+{
+	char *url = "https://a.4cdn.org/boards.json";	
+	json_error_t error;
+	char *text = request(url);
+	if(!text) return 1;
+	json_t* root = json_loads(text, 0, &error);
+	free(text);
+	*boards = json_object_get(root, "boards");
 	return 0;
 }
