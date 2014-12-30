@@ -82,7 +82,9 @@ int get_post_data(json_t* post, struct post_data* ch)
 }
 int get_catalog_data(json_t* cat, struct thread_data* data)
 {
-
+	json_t* thrds = json_object_get(json_array_get(cat, 0), "threads");
+	json_t* t = json_array_get(thrds, 0);
+	//TODO: all this bit
 	return 0;
 }	
 int get_catalog_json(json_t** data, char* board)
